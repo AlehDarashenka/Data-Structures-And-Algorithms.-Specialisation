@@ -1,41 +1,52 @@
+#Uses Python2
 class priority_queue:
 
     def __init__(self,  array):
         self.size = len(array)
         self.index = 0
-        self.heap = array
+        self.heap = [_ for _ in array]
 
     def left_child(self, i):
-        self.index = (i+1)*2-1
+        self.index = i*2 + 1
 
     def right_child(self, i):
-        self.index = (i+1)*2
+        self.index = i*2 + 2
 
 
     def sift_down(self, i):
         maxindex = i
-        left = self.left_child(i)
-        print left
-        if left<self.size and self.heap[left]>self.heap[maxindex]:
-            maxindex = left
+        self.left_child(i)
 
-        right = self.right_child(i)
-        if right<self.size and self.heap[right]>self.heap[maxindex]:
-            maxindex = right
+        if self.index < self.size and self.heap[self.index] < self.heap[maxindex]:
+            maxindex = self.index
+
+        self.right_child(i)
+
+        if self.index < self.size and self.heap[self.index] < self.heap[maxindex]:
+            maxindex = self.index
 
         if maxindex != i:
-            self.heap[i], self.heap[maxindex] = self.heap[maxindex] ,self.heap[i]
+            self.heap[i], self.heap[maxindex] = self.heap[maxindex], self.heap[i]
+            print i, maxindex
             self.sift_down(maxindex)
 
-    def build_heap(self, array):
-        for i in range:
-            print i
-            self.sift_down(i)
+    def build_heap(self):
+        for i in range(self.size/2, 0, -1):
+            self.sift_down(i-1)
 
-q = priority_queue([5,4,3,2,1])
-q.build_heap([5,4,3,2,1])
-print q.heap
 
+def main():
+
+    n = int(raw_input())
+    array = map(int, raw_input().split())
+    q = priority_queue(array)
+    q.build_heap()
+    if array == q.heap:
+        print 0
+
+
+if __name__ == '__main__':
+    main()
 
 
 
