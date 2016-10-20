@@ -1,3 +1,4 @@
+#Uses Python2
 '''
 You have a program which is parallelized and uses n independent threads to process the given list
 of m jobs. Threads take jobs in the order they are given in the input. If there is a free thread,
