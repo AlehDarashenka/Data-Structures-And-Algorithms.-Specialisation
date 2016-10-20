@@ -1,7 +1,7 @@
 #Uses Python2
 class priority_queue:
 
-    def __init__(self,  array):
+    def __init__(self,  array=None):
         self.size = len(array)
         self.index = 0
         self.heap = [_ for _ in array]
@@ -11,6 +11,9 @@ class priority_queue:
 
     def right_child(self, i):
         self.index = i*2 + 2
+
+    def parent(self, i):
+        self.index = (i-1)/2
 
     def sift_down(self, i):
         maxindex = i
@@ -29,11 +32,27 @@ class priority_queue:
             print i, maxindex
             self.sift_down(maxindex)
 
+    def sift_up(self, ind):
+        self.parent(ind)
+        while ind > 0 and self.heap[self.index] > self.heap[ind]:
+            self.heap[self.index], self.heap[ind] = self.heap[ind], self.heap[self.index]
+            self.parent(ind)
+
+
+
+
+    def insert(self, value):
+        self.heap.append(value)
+        self.size = len(self.heap)
+        self.sift_up(self.size-1)
+
+
     def extract_max(self):
         result = self.heap[0]
-        self.heap[0] = self.heap[self.size-1]
-        self.size -= 1
-        self.sift_down(0)
+        if len(self.heap)>1:
+            self.heap[0] = self.heap.pop()
+            self.size = len(self.heap)
+            self.sift_down(0)
         return result
 
     def build_heap(self):
